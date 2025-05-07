@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Client - {{config.appName}}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">Add New Client</h2>
+    <form action="/client-form" method="POST">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Full Name</label>
+          <input type="text" name="full_name" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">National ID / Passport</label>
+          <input type="text" name="national_id" class="form-control" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" name="dob" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Gender</label>
+          <select name="gender" class="form-select">
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Marital Status</label>
+          <select name="marital_status" class="form-select">
+            <option value="">Select Status</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" name="phone" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Email (Optional)</label>
+          <input type="email" name="email" class="form-control">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Address</label>
+        <textarea name="address" class="form-control" rows="2"></textarea>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Next of Kin</label>
+          <input type="text" name="next_of_kin" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Kin Phone</label>
+          <input type="tel" name="kin_phone" class="form-control">
+        </div>
+      </div>
+
+      <h4 class="mt-4">Occupation Details</h4>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Occupation / Job Title</label>
+          <input type="text" name="occupation" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Employer / Business Name</label>
+          <input type="text" name="employer" class="form-control">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Monthly Income (USD)</label>
+          <input type="number" step="0.01" name="income" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Years in Current Job / Business</label>
+          <input type="number" name="years_in_job" class="form-control">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Client</button>
+      <a href="/clients" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</body>
+</html>
