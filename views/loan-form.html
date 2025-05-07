@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - {{config.appName}}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { background-color: #f8f9fa; }
+    .sidebar { height: 100vh; position: fixed; width: 220px; }
+    .content { margin-left: 220px; padding: 20px; }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="d-flex">
+    <div class="bg-dark text-white sidebar p-3">
+      <h5 class="mb-4">{{config.appName}}</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item"><a href="/dashboard" class="nav-link text-white">Dashboard</a></li>
+        <li class="nav-item"><a href="/clients" class="nav-link text-white">Clients</a></li>
+        <li class="nav-item"><a href="/loans" class="nav-link text-white">Apply Loan</a></li>
+        <li class="nav-item"><a href="/logout" class="nav-link text-white">Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <h2>Welcome, Admin!</h2>
+      <p>This is your dashboard. You can view reports, manage clients, and apply loans.</p>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5>Total Clients</h5>
+              <h3 id="total-clients">Loading...</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5>Total Loans Issued</h5>
+              <h3 id="total-loans">Loading...</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5>Total Disbursed Amount</h5>
+              <h3 id="total-disbursed">Loading...</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5>Outstanding Balance</h5>
+              <h3 id="outstanding-balance">Loading...</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <canvas id="loanChart" class="mt-5" height="100"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // Fetch data from API (we'll add real API calls later)
+    fetch('/api/stats')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('total-clients').innerText = data.total_clients;
+        document.getElementById('total-loans').innerText = data.total_loans;
+        document.getElementById('total-disbursed').innerText = "$" + data.total_disbursed.toFixed(2);
+        document.getElementById('outstanding-balance').innerText = "$" + data.outstanding_balance.toFixed(2);
+
+        const ctx = document.getElementById('loanChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Loans', 'Disbursed'],
+            datasets: [{
+              label: 'Total Amount (USD)',
+              data: [data.total_loans_amount || 0, data.total_disbursed || 0],
+              backgroundColor: ['#007BFF', '#28A745']
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              title: { display: true, text: 'Loan Statistics' }
+            }
+          }
+        });
+      });
+  </script>
+</body>
+</html>
